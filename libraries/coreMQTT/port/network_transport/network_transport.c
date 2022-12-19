@@ -92,6 +92,7 @@ int32_t espTlsTransportRecv(NetworkContext_t* pxNetworkContext,
 {
     if (pvData == NULL || uxDataLen == 0)
     {
+        ESP_LOGE("network_transport", "Invalid receive request");
         return -1;
     }
     int32_t lBytesRead = 0;
@@ -103,6 +104,7 @@ int32_t espTlsTransportRecv(NetworkContext_t* pxNetworkContext,
     }
     else
     {
+        ESP_LOGE("network_transport", "pxNetworkContext or pxTls uninitialised");
         return -1; /* pxNetworkContext or pxTls uninitialised */
     }
     if (lBytesRead == ESP_TLS_ERR_SSL_WANT_WRITE  || lBytesRead == ESP_TLS_ERR_SSL_WANT_READ) {
@@ -113,6 +115,7 @@ int32_t espTlsTransportRecv(NetworkContext_t* pxNetworkContext,
     }
     if (lBytesRead == 0) {
         /* Connection closed */
+        ESP_LOGE("network_transport", "Connection closed");
         return -1;
     }
     return lBytesRead;
